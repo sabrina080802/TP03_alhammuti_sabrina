@@ -1,0 +1,43 @@
+.recap {
+  flex: 1;
+}
+.recap p {
+  margin: 0;
+  margin-bottom: 0.5em;
+}
+.recap a {
+  background-color: var(--secondary);
+  padding: 0.5em 1em;
+  text-decoration: none;
+  text-align: center;
+
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.25em;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.recap button {
+  background-color: var(--secondary);
+  padding: 0.5em 1em;
+  text-decoration: none;
+  text-align: center;
+
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.25em;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.recap-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

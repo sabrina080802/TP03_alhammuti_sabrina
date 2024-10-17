@@ -1,0 +1,18 @@
+<div class="recap">
+  <h2>Récapitulatif des informations</h2>
+  <p>Nom : {{ client.nom }}</p>
+  <p>Prénom : {{ client.prenom }}</p>
+  <p>Adresse : {{ client.adresse }}</p>
+  <p>Code Postal : {{ client.cp }}</p>
+  <p>Ville : {{ client.ville }}</p>
+  <p>Téléphone : {{ client.telephone }}</p>
+  <p>Email : {{ client.email }}</p>
+  <p>Civilité : {{ client.civilite }}</p>
+  <p>Login : {{ client.login }}</p>
+  <p>Pays : {{ client.pays }}</p>
+
+  <div class="recap-menu">
+    <a href="/">Modifier</a>
+    <button (click)="onHome()">Retour à l'accueil</button>
+  </div>
+</div>

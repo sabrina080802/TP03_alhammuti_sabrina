@@ -1,0 +1,146 @@
+<form (ngSubmit)="onSubmit(clientForm)" #clientForm="ngForm" class="recap">
+  <div>
+    <input
+      type="text"
+      id="nom"
+      [(ngModel)]="client.nom"
+      name="nom"
+      required
+      pattern="[a-zA-Z\s\-]+"
+      placeholder=" "
+    />
+    <label for="nom">Nom :</label>
+  </div>
+
+  <div>
+    <input
+      type="text"
+      id="prenom"
+      [(ngModel)]="client.prenom"
+      name="prenom"
+      pattern="[a-zA-Z\s\-]+"
+      placeholder=" "
+      required
+    />
+    <label for="prenom">Prénom :</label>
+  </div>
+
+  <div>
+    <input
+      type="text"
+      id="adresse"
+      [(ngModel)]="client.adresse"
+      name="adresse"
+      placeholder=" "
+      required
+    />
+    <label for="adresse">Adresse :</label>
+  </div>
+
+  <div>
+    <input
+      type="text"
+      id="cp"
+      [(ngModel)]="client.cp"
+      name="cp"
+      required
+      pattern="[0-9]{5}"
+      placeholder=" "
+    />
+    <label for="cp">Code Postal :</label>
+  </div>
+
+  <div>
+    <input
+      type="text"
+      id="ville"
+      [(ngModel)]="client.ville"
+      name="ville"
+      required
+      pattern="[a-zA-Z\s\-]+"
+      placeholder=" "
+    />
+    <label for="ville">Ville :</label>
+  </div>
+
+  <div>
+    <input
+      type="text"
+      id="pays"
+      [(ngModel)]="client.pays"
+      name="pays"
+      required
+      pattern="[a-zA-Z\s\-]+"
+      placeholder=" "
+    />
+    <label for="pays">Pays :</label>
+  </div>
+
+  <div>
+    <input
+      type="text"
+      id="telephone"
+      [(ngModel)]="client.telephone"
+      name="telephone"
+      required
+      pattern="[0-9]{10}"
+      placeholder=" "
+    />
+    <label for="telephone">Téléphone :</label>
+  </div>
+
+  <div>
+    <input
+      type="email"
+      id="email"
+      [(ngModel)]="client.email"
+      name="email"
+      placeholder=" "
+      required
+    />
+    <label for="email">Email :</label>
+  </div>
+
+  <div>
+    <select
+      type="text"
+      id="civilite"
+      [(ngModel)]="client.civilite"
+      name="civilite"
+      required
+    >
+      <option value="M">Monsieur</option>
+      <option value="Mme">Madame</option>
+    </select>
+    <label for="civilite">Civilite :</label>
+  </div>
+
+  <div>
+    <input
+      type="text"
+      id="login"
+      [(ngModel)]="client.login"
+      name="login"
+      pattern="[a-zA-Z\s\-0-9\.\_]+"
+      placeholder=" "
+      required
+    />
+    <label for="login">Login :</label>
+  </div>
+
+  <div>
+    <input
+      type="password"
+      id="password"
+      [(ngModel)]="client.password"
+      name="password"
+      minlength="6"
+      maxlength="32"
+      placeholder=" "
+      required
+    />
+    <label for="password">Mot de passe :</label>
+  </div>
+
+  <button type="submit">Valider</button>
+</form>
