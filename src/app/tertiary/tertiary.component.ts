@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tertiary',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './tertiary.component.html',
-  styleUrl: './tertiary.component.css'
+  styleUrl: './tertiary.component.css',
 })
-export class TertiaryComponent {
-
-}
+export class TertiaryComponent {}

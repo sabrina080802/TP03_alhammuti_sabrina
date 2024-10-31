@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-recap',
+  selector: 'app-profil',
   standalone: true,
   imports: [RouterModule],
-  templateUrl: './recap.component.html',
-  styleUrl: './recap.component.css',
+  templateUrl: './profil.component.html',
+  styleUrl: './profil.component.css',
 })
-export class RecapComponent {
+export class ProfilComponent {
   client = {
     nom: '',
     prenom: '',

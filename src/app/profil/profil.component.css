@@ -1,11 +1,11 @@
-.recap {
+.profil {
   flex: 1;
 }
-.recap p {
+.profil p {
   margin: 0;
   margin-bottom: 0.5em;
 }
-.recap a {
+.profil a {
   background-color: var(--secondary);
   padding: 0.5em 1em;
   text-decoration: none;
@@ -21,7 +21,7 @@
   margin-top: 20px;
 }
 
-.recap button {
+.profil button {
   background-color: var(--secondary);
   padding: 0.5em 1em;
   text-decoration: none;
@@ -36,7 +36,7 @@
   cursor: pointer;
   margin-top: 20px;
 }
-.recap-menu {
+.profil-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
