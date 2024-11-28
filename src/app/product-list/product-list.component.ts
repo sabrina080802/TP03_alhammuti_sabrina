@@ -8,6 +8,7 @@ import {
 import { SephoraProductService } from '../sephora-products.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
@@ -17,6 +18,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './product-list.component.css',
 })
 export class ProductListComponent implements OnInit {
+  subList: any;
   products: any[] = [];
   productList: ElementRef[] = [];
 
@@ -30,7 +32,7 @@ export class ProductListComponent implements OnInit {
   constructor(private productService: SephoraProductService) {}
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe((data) => {
+    this.subList = this.productService.getProducts().subscribe((data) => {
       this.products = data;
       data.forEach((product) => {
         if (this.categories.includes(product.category.trim()) == false) {
@@ -43,23 +45,35 @@ export class ProductListComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.subList.unsubscribe();
+  }
+
   onCategoryChange(event: Event): void {
-    this.productService
+    if (this.subList != null) this.subList.unsubscribe();
+
+    this.subList = this.productService
       .getProductsByCategory(this.category)
       .subscribe((data) => {
         this.products = data;
       });
   }
   onApplyPriceFilter(): void {
-    this.productService
+    if (this.subList != null) this.subList.unsubscribe();
+
+    this.subList = this.productService
       .getProductsByPrice(this.minPrice, this.maxPrice)
       .subscribe((data) => {
         this.products = data;
       });
   }
   onSearchByName(): void {
-    this.productService.getProductsByName(this.searchName).subscribe((data) => {
-      this.products = data;
-    });
+    if (this.subList != null) this.subList.unsubscribe();
+
+    this.subList = this.productService
+      .getProductsByName(this.searchName)
+      .subscribe((data) => {
+        this.products = data;
+      });
   }
 }

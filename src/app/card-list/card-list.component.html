@@ -1,0 +1,13 @@
+<div *ngIf="cards.length > 0">
+  <ul>
+    <li *ngFor="let card of cards">
+      {{ card.name }} - {{ card.cardNumber }} - Exp: {{ card.expiryMonth }}/{{
+        card.expiryYear
+      }}
+      <button (click)="onDelete(card)">Supprimer</button>
+    </li>
+  </ul>
+</div>
+<div *ngIf="cards.length === 0">
+  <p>Aucune carte disponible.</p>
+</div>
