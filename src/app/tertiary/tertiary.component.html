@@ -7,6 +7,9 @@
       <li routerLinkActive="active"><a routerLink="/profil">Profil</a></li>
       <li routerLinkActive="active"><a routerLink="/paiement">Paiement</a></li>
       <li routerLinkActive="active"><a routerLink="/cartes">Mes Cartes</a></li>
+      <li routerLinkActive="active">
+        <a routerLink="/panier">Mon panier ({{ count | async }})</a>
+      </li>
     </ul>
   </nav>
 </header>

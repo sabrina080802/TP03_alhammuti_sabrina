@@ -6,56 +6,93 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class CardService {
-  private cardsSubject = new BehaviorSubject<Card[]>([]);
+  private cardsSubject = new BehaviorSubject<Card[]>(this.loadCards());
+  private editingCardSubject = new BehaviorSubject<Card | null>(null);
   cards$ = this.cardsSubject.asObservable();
+  editingCard$ = this.editingCardSubject.asObservable();
 
   constructor() {
-    const initialCards: Card[] = [
-      {
-        id: 1,
-        name: 'Carte 1',
-        cardNumber: '1234567812345678',
-        ccv: '123',
-        expiryMonth: '12',
-        expiryYear: '2025',
-      },
-      {
-        id: 2,
-        name: 'Carte 2',
-        cardNumber: '2345678923456789',
-        ccv: '456',
-        expiryMonth: '11',
-        expiryYear: '2024',
-      },
-    ];
-    this.cardsSubject.next(initialCards);
+    if (this.getCards().length == 0) {
+      const initialCards: Card[] = [
+        {
+          id: 1,
+          name: 'Carte 1',
+          cardNumber: '1234567812345678',
+          ccv: '123',
+          expiryMonth: '12',
+          expiryYear: '2025',
+        },
+        {
+          id: 2,
+          name: 'Carte 2',
+          cardNumber: '2345678923456789',
+          ccv: '456',
+          expiryMonth: '11',
+          expiryYear: '2024',
+        },
+      ];
+      this.cardsSubject.next(initialCards);
+    }
+  }
+
+  private isBrowser(): boolean {
+    return (
+      typeof window !== 'undefined' &&
+      typeof window.localStorage !== 'undefined'
+    );
+  }
+
+  private loadCards(): Card[] {
+    if (this.isBrowser()) {
+      const savedCards = localStorage.getItem('cards');
+      return savedCards ? JSON.parse(savedCards) : [];
+    }
+    return [];
+  }
+
+  private saveCards(cards: Card[]): void {
+    if (this.isBrowser()) {
+      localStorage.setItem('cards', JSON.stringify(cards));
+    }
   }
 
   addCard(card: Card): void {
     const currentCards = this.cardsSubject.value;
-    this.cardsSubject.next([...currentCards, card]);
+    const newId =
+      currentCards.length > 0
+        ? Math.max(...currentCards.map((c) => c.id || 0)) + 1
+        : 1;
+    const newCard = { ...card, id: newId, name: card.name || `Carte ${newId}` };
+    currentCards.push(newCard);
+    this.saveCards(currentCards);
   }
 
   deleteCard(card: Card): void {
-    const currentCards = this.cardsSubject.value;
-    const updatedCards = currentCards.filter(
+    const currentCards = this.cardsSubject.value.filter(
       (c) => c.cardNumber !== card.cardNumber
     );
-    this.cardsSubject.next(updatedCards);
+    this.saveCards(currentCards);
   }
 
   updateCard(updatedCard: Card): void {
     const currentCards = this.cardsSubject.value;
-    const index = currentCards.findIndex(
-      (c) => c.cardNumber === updatedCard.cardNumber
+    const updatedCards = currentCards.map((c) =>
+      c.id === updatedCard.id ? updatedCard : c
     );
-    if (index !== -1) {
-      currentCards[index] = updatedCard;
-      this.cardsSubject.next([...currentCards]);
-    }
+
+    this.saveCards(updatedCards);
+    this.cardsSubject.next(updatedCards);
   }
 
   getCards(): Card[] {
     return this.cardsSubject.value;
+  }
+
+  setEditingCard(card: Card): void {
+    this.editingCardSubject.next(card);
+  }
+
+  getEditingCard(): Card | null {
+    return this.editingCardSubject.value;
   }
 }

@@ -22,6 +22,9 @@
       <img [src]="product.imageUrl" alt="{{ product.name }}" />
       <h2>{{ product.name }}</h2>
       <p class="description">{{ product.description }}</p>
+      <button (click)="addProductToCart(product)" class="btn-add-cart">
+        <img src="/photo/panier.png" alt="" />
+      </button>
       <p class="price">
         Price: {{ product.price | currency : "EUR" : "symbol" : "1.2-2" }}
       </p>

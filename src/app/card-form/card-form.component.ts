@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Card } from '../card.model';
+import { CardService } from '../card.service';
 
 @Component({
   selector: 'app-card-form',
@@ -17,9 +18,9 @@ import { Card } from '../card.model';
 })
 export class CardFormComponent {
   cardForm: FormGroup;
-  cardService: any;
+  selectedCardId: number | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private cardService: CardService) {
     this.cardForm = this.fb.group({
       cardName: ['', [Validators.required, Validators.maxLength(100)]],
       cardNumber: [
@@ -35,11 +36,30 @@ export class CardFormComponent {
     });
   }
 
-  onSubmit() {
+  ngOnInit(): void {
+    const editingCard = this.cardService.getEditingCard();
+    if (editingCard) {
+      this.cardForm.setValue({
+        cardName: editingCard.name,
+        cardNumber: editingCard.cardNumber,
+        ccv: editingCard.ccv,
+        expiryMonth: editingCard.expiryMonth,
+        expiryYear: editingCard.expiryYear,
+      });
+      this.selectedCardId = editingCard.id;
+    }
+  }
+
+  onSubmit(): void {
     if (this.cardForm.valid) {
       const cardData: Card = this.cardForm.value;
-      console.log('Carte soumise:', cardData);
-      this.cardService.addCard(cardData);
+      if (this.selectedCardId) {
+        cardData.id = this.selectedCardId;
+        this.cardService.updateCard(cardData);
+      } else {
+        this.cardService.addCard(cardData);
+      }
+
       this.cardForm.reset();
     } else {
       alert('Veuillez corriger les erreurs avant de soumettre.');

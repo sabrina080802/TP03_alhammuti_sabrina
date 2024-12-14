@@ -9,6 +9,9 @@ import { SephoraProductService } from '../sephora-products.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { CartState, AddProduct } from '../cart/cart.state';
+import { Product } from '../product';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-product-list',
@@ -29,7 +32,10 @@ export class ProductListComponent implements OnInit {
   category: string = 'Toutes les catégories';
   searchName: string = '';
 
-  constructor(private productService: SephoraProductService) {}
+  constructor(
+    private productService: SephoraProductService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     this.subList = this.productService.getProducts().subscribe((data) => {
@@ -75,5 +81,9 @@ export class ProductListComponent implements OnInit {
       .subscribe((data) => {
         this.products = data;
       });
+  }
+
+  addProductToCart(product: Product): void {
+    this.store.dispatch(new AddProduct(product));
   }
 }
